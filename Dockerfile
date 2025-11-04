@@ -11,10 +11,10 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["NepremicnineProjekt/NepremicnineProjekt.csproj", "Razvoj_Nal2_2/"]
+COPY ["NepremicnineProjekt/NepremicnineProjekt.csproj", "./NepremicnineProjekt/"]
 RUN dotnet restore "NepremicnineProjekt/NepremicnineProjekt.csproj"
 COPY . .
-WORKDIR "/src/Razvoj_Nal2_2"
+WORKDIR "/src/NepremicnineProjekt"
 RUN dotnet build "NepremicnineProjekt/NepremicnineProjekt.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage
@@ -28,4 +28,5 @@ WORKDIR /app
 COPY --from=publish /app/publish .
 
 ENTRYPOINT ["dotnet", "Razvoj_Nal2_2.dll"]
+
 
